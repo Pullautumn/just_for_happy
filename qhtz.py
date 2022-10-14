@@ -6,10 +6,10 @@ agentid = ''
 corpsecret = ''
 touser = ''
 # 推送加 token
-plustoken = '5c1524fa76a9420db7089decc1817f55'
+plustoken = ''
 
 #茄皇登录https://apig.xiaoyisz.com/qiehuang/ga/public/api/login里面的请求body全部
-qhbody='{"appId":"wx532ecb3bdaaf92f9","openId":"oBk224nb3ruPrPfhTaRJidB4-a34","wid":3152750189,"signature":"3753808EA1D138880D410EC31430E7DC"}'
+qhbody=''
 
 
 def Push(contents):
