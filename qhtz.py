@@ -8,7 +8,8 @@ touser = ''
 # 推送加 token
 plustoken = ''
 
-#茄皇登录https://apig.xiaoyisz.com/qiehuang/ga/public/api/login里面的请求body全部
+#茄皇登录https://apig.xiaoyisz.com/qiehuang/ga/public/api/login里面的请求body全部 
+#茄皇实物有货是推送消息 没有实物不推送 建议设置一小时运行一次
 qhbody=''
 
 
