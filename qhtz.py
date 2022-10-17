@@ -75,6 +75,6 @@ for a in range(2,len(data),1):
         message = data[a]['name'] + ' 库存：' + str(data[a]['leftStock'])
         Push(contents=message)
     else:
-        print('看看'+data[a]['name']+'--库存：'+str(data[a]['leftStock'])+'  洗洗睡没有货！！！')
+        print('查看--'+data[a]['name']+'--库存：'+str(data[a]['leftStock'])+'  洗洗睡没有货！！！')
 
 
