@@ -5,7 +5,7 @@
  小程序：统一快乐星球
  入口：活动->种番茄
  功能：除了助力都能完成
- 抓包：api.xiaoyisz.com/qiehuang/ga/public/api/login  这个登录包里 body 部分的 全部
+ 抓包：apig.xiaoyisz.com/qiehuang/ga/public/apig/login  这个登录包里 body 部分的 全部
  变量：tybody='body@xxxx '  多个账号用 @ 或者 换行 分割 
  定时一天三次，八个小时一次收取冒险奖励
  cron: 10 12,18 * * *
@@ -14,9 +14,9 @@
  #统一茄皇
  10 12,18 * * *  https://raw.githubusercontent.com/lksky8/sign-ql/main/tyqh.js, tag=统一茄皇, enabled=true
  [rewrite_local]
- http://api.xiaoyisz.com/qiehuang/ga/public/api/login url script-request-header https://raw.githubusercontent.com/lksky8/sign-ql/main/tyqh.js
+ http://apig.xiaoyisz.com/qiehuang/ga/public/apig/login url script-request-header https://raw.githubusercontent.com/lksky8/sign-ql/main/tyqh.js
  [MITM]
- hostname = api.xiaoyisz.com
+ hostname = apig.xiaoyisz.com
 
  6-14 更新了AU获取方式，理论上不会过期了
  6-18 更新了收取植物、种新的植物和推送加上昵称，方便辨认（可能）
@@ -25,6 +25,7 @@
  6-26 移除了开始冒险，加到助力脚本，现在四个号可以两个小时冒险一次
  6-28 新增偷取好友阳光（出自jujuju大佬）
  9-19 修复数据，去掉了脚本检测更新功能
+ 10-26 修复url更新导致任务不能正常完成
  */
 
  const $ = new Env("统一茄皇-修复版");
@@ -206,9 +207,9 @@
   */
  function refreshAu(timeout = 2 * 1000) {
    let url = {
-     url: `http://api.xiaoyisz.com/qiehuang/ga/public/api/login`,
+     url: `https://apig.xiaoyisz.com/qiehuang/ga/public/api/login`,
      headers: {
-       Host: "api.xiaoyisz.com",
+       Host: "apig.xiaoyisz.com",
        "user-agent": `${ua}`,
        "Content-Type": "application/json",
      },
@@ -249,9 +250,9 @@
  async function stealFriendSunshine(timeout = 2 * 1000) {
    //--0 先获取好友列表
    let url = {
-     url: 'http://api.xiaoyisz.com/qiehuang/ga/user/friend/list?'+sign()+`&page=1&size=50`,
+     url: 'https://apig.xiaoyisz.com/qiehuang/ga/user/friend/list?'+sign()+`&page=1&size=50`,
      headers: {
-       Host: "api.xiaoyisz.com",
+       Host: "apig.xiaoyisz.com",
        authorization: `${tyau}`,
        "user-agent": `${ua}`,
        "Content-Type": "application/json",
@@ -319,9 +320,9 @@
    return new Promise((resolve) => {
      let url = {
        url:
-         'http://api.xiaoyisz.com/qiehuang/ga/user/daily/steal?'+sign()+'&friendUserId='+userId,
+         'https://apig.xiaoyisz.com/qiehuang/ga/user/daily/steal?'+sign()+'&friendUserId='+userId,
        headers: {
-         Host: "api.xiaoyisz.com",
+         Host: "apig.xiaoyisz.com",
          authorization: `${tyau}`,
          "user-agent": `${ua}`,
          "Content-Type": "application/json",
@@ -361,9 +362,9 @@
   */
  function report(num) {
    let url = {
-     url: `http://api.xiaoyisz.com/qiehuang/ga/user/task/report?`+sign()+`&taskType=${taskTypeArr[num]}&attachId=${timestampMs()}&taskId=${taskIdArr[num]}`,
+     url: `https://apig.xiaoyisz.com/qiehuang/ga/user/task/report?`+sign()+`&taskType=${taskTypeArr[num]}&attachId=${timestampMs()}&taskId=${taskIdArr[num]}`,
      headers: {
-       Host: "api.xiaoyisz.com",
+       Host: "apig.xiaoyisz.com",
        authorization: `${tyau}`,
        "user-agent": `${ua}`,
        "content-type": "application/json",
@@ -401,9 +402,9 @@
   */
  function getDrawPriz(num) {
    let url = {
-     url: `http://api.xiaoyisz.com/qiehuang/ga/user/task/drawPrize?`+sign()+`&taskId=${taskIdArr[num]}`,
+     url: `https://apig.xiaoyisz.com/qiehuang/ga/user/task/drawPrize?`+sign()+`&taskId=${taskIdArr[num]}`,
      headers: {
-       Host: "api.xiaoyisz.com",
+       Host: "apig.xiaoyisz.com",
        authorization: `${tyau}`,
        "user-agent": `${ua}`,
        "content-type": "application/json",
@@ -442,9 +443,9 @@
   */
  function getTask(timeout = 2 * 1000) {
    let url = {
-     url: 'http://api.xiaoyisz.com/qiehuang/ga/user/task/list?'+sign(),
+     url: 'https://apig.xiaoyisz.com/qiehuang/ga/user/task/list?'+sign(),
      headers: {
-       Host: "api.xiaoyisz.com",
+       Host: "apig.xiaoyisz.com",
        authorization: `${tyau}`,
        "user-agent": `${ua}`,
        "content-type": "application/json",
@@ -493,9 +494,9 @@
   */
  function getPlant(num) {
    let url = {
-     url: 'http://api.xiaoyisz.com/qiehuang/ga/plant/info?'+sign(),
+     url: 'https://apig.xiaoyisz.com/qiehuang/ga/plant/info?'+sign(),
      headers: {
-       Host: "api.xiaoyisz.com",
+       Host: "apig.xiaoyisz.com",
        authorization: `${tyau}`,
        "user-agent": `${ua}`,
        "content-type": "application/json",
@@ -536,9 +537,9 @@
   */
  function startCallenge(timeout = 2 * 1000) {
    let url = {
-     url: 'http://api.xiaoyisz.com/qiehuang/ga/challenge/start?'+sign(),
+     url: 'https://apig.xiaoyisz.com/qiehuang/ga/challenge/start?'+sign(),
      headers: {
-       Host: "api.xiaoyisz.com",
+       Host: "apig.xiaoyisz.com",
        authorization: `${tyau}`,
        "user-agent": `${ua}`,
        "content-type": "application/json",
@@ -576,9 +577,9 @@
   */
  function reportCallenge(timeout = 2 * 1000) {
    let url = {
-     url: 'http://api.xiaoyisz.com/qiehuang/ga/challenge/report?'+sign(),
+     url: 'https://apig.xiaoyisz.com/qiehuang/ga/challenge/report?'+sign(),
      headers: {
-       Host: "api.xiaoyisz.com",
+       Host: "apig.xiaoyisz.com",
        authorization: `${tyau}`,
        "user-agent": `${ua}`,
        "Content-Type": "application/json",
@@ -618,9 +619,9 @@
   */
  function startAdventure(timeout = 2 * 1000) {
    let url = {
-     url: 'http://api.xiaoyisz.com/qiehuang/ga/user/adventure/start?'+sign(),
+     url: 'https://apig.xiaoyisz.com/qiehuang/ga/user/adventure/start?'+sign(),
      headers: {
-       Host: "api.xiaoyisz.com",
+       Host: "apig.xiaoyisz.com",
        authorization: `${tyau}`,
        "user-agent": `${ua}`,
        "content-type": "application/json",
@@ -656,9 +657,9 @@
   */
  function queryAdventure(timeout = 2 * 1000) {
    let url = {
-     url: 'http://api.xiaoyisz.com/qiehuang/ga/user/adventure/info?'+sign()+'&userId=-1&type=2',
+     url: 'https://apig.xiaoyisz.com/qiehuang/ga/user/adventure/info?'+sign()+'&userId=-1&type=2',
      headers: {
-       Host: "api.xiaoyisz.com",
+       Host: "apig.xiaoyisz.com",
        authorization: `${tyau}`,
        "user-agent": `${ua}`,
        "content-type": "application/json",
@@ -709,9 +710,9 @@
   */
  function reportAdventure(timeout = 2 * 1000) {
    let url = {
-     url: 'http://api.xiaoyisz.com/qiehuang/ga/user/adventure/drawPrize?'+sign()+`&adventureId=${adventureId}`,
+     url: 'https://apig.xiaoyisz.com/qiehuang/ga/user/adventure/drawPrize?'+sign()+`&adventureId=${adventureId}`,
      headers: {
-       Host: "api.xiaoyisz.com",
+       Host: "apig.xiaoyisz.com",
        authorization: `${tyau}`,
        "user-agent": `${ua}`,
        "Content-Type": "application/json",
@@ -750,9 +751,9 @@
   */
  function giveSunshine(timeout = 2 * 1000) {
    let url = {
-     url: 'http://api.xiaoyisz.com/qiehuang/ga/plant/batchgiveSunshine?'+sign()+`&plantId=${tyPlantId}`,
+     url: 'https://apig.xiaoyisz.com/qiehuang/ga/plant/batchgiveSunshine?'+sign()+`&plantId=${tyPlantId}`,
      headers: {
-       Host: "api.xiaoyisz.com",
+       Host: "apig.xiaoyisz.com",
        authorization: `${tyau}`,
        "user-agent": `${ua}`,
        "content-type": "application/json",
@@ -803,9 +804,9 @@
   */
  function upgrade(timeout = 2 * 1000) {
    let url = {
-     url: 'http://api.xiaoyisz.com/qiehuang/ga/plant/upgrade?'+sign()+`&plantId=${tyPlantId}`,
+     url: 'https://apig.xiaoyisz.com/qiehuang/ga/plant/upgrade?'+sign()+`&plantId=${tyPlantId}`,
      headers: {
-       Host: "api.xiaoyisz.com",
+       Host: "apig.xiaoyisz.com",
        authorization: `${tyau}`,
        "user-agent": `${ua}`,
        "content-type": "application/json",
@@ -840,9 +841,9 @@
   */
  function getTomato(timeout = 2 * 1000) {
    let url = {
-     url: 'http://api.xiaoyisz.com/qiehuang/ga/user/info?'+sign(),
+     url: 'https://apig.xiaoyisz.com/qiehuang/ga/user/info?'+sign(),
      headers: {
-       Host: "api.xiaoyisz.com",
+       Host: "apig.xiaoyisz.com",
        authorization: `${tyau}`,
        "user-agent": `${ua}`,
        "Content-Type": "application/json",
@@ -889,9 +890,9 @@
   */
  function getSunshine(timeout = 2 * 1000) {
    let url = {
-     url: 'http://api.xiaoyisz.com/qiehuang/ga/user/daily/pickup?'+sign(),
+     url: 'https://apig.xiaoyisz.com/qiehuang/ga/user/daily/pickup?'+sign(),
      headers: {
-       Host: "api.xiaoyisz.com",
+       Host: "apigg.xiaoyisz.com",
        authorization: `${tyau}`,
        "user-agent": `${ua}`,
        "content-type": "application/json",
@@ -927,9 +928,9 @@
   */
  function getHarvest(timeout = 2 * 1000) {
    let url = {
-     url: 'http://api.xiaoyisz.com/qiehuang/ga/plant/harvest?'+sign()+`&plantId=${tyPlantId}`,
+     url: 'https://apig.xiaoyisz.com/qiehuang/ga/plant/harvest?'+sign()+`&plantId=${tyPlantId}`,
      headers: {
-       Host: "api.xiaoyisz.com",
+       Host: "apig.xiaoyisz.com",
        authorization: `${tyau}`,
        "user-agent": `${ua}`,
        "Content-Type": "application/json",
@@ -967,9 +968,9 @@
   */
  function getNewPlant(timeout = 2 * 1000) {
    let url = {
-     url: `http://api.xiaoyisz.com/qiehuang/ga/plant/start?`+sign(),
+     url: `https://apig.xiaoyisz.com/qiehuang/ga/plant/start?`+sign(),
      headers: {
-       Host: "api.xiaoyisz.com",
+       Host: "apig.xiaoyisz.com",
        authorization: `${tyau}`,
        "user-agent": `${ua}`,
        "Content-Type": "application/json",
@@ -1010,9 +1011,9 @@
   */
  function getUserInfo(timeout = 2 * 1000) {
    let url = {
-     url: `http://api.xiaoyisz.com/qiehuang/ga/user/info?`+sign(),
+     url: `https://apig.xiaoyisz.com/qiehuang/ga/user/info?`+sign(),
      headers: {
-       Host: "api.xiaoyisz.com",
+       Host: "apig.xiaoyisz.com",
        authorization: `${tyau}`,
        "user-agent": `${ua}`,
        "Content-Type": "application/json",
