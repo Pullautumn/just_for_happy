@@ -17,7 +17,6 @@
  6-25 更新了冒险助力
  6-26 修复了冒险助力的小bug，建议更改定时两个小时一次
  9-26 修复互助功能
- 10-26 修复url更新
 */
 
 const $ = new Env('统一茄皇互助');
@@ -210,7 +209,7 @@ function getTask(timeout = 2*1000) {
  */
 function getPlant(num) {
     let url = {
-      url : 'http://apig.xiaoyisz.com/qiehuang/ga/plant/info?'+sign(),
+      url : 'https://apig.xiaoyisz.com/qiehuang/ga/plant/info?'+sign(),
       headers : {
         "Host": "apig.xiaoyisz.com",
         "authorization": `${tyau}`,
