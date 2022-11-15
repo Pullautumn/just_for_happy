@@ -1,6 +1,6 @@
 import requests, json, time, datetime, hashlib
 
-# 企业微信推送参数
+# 企业微信推送参数*
 corpid = ''
 agentid = ''
 corpsecret = ''
