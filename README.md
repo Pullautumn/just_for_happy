@@ -13,3 +13,7 @@
 
 
 部分脚本为搬运 拿走的记得给我点个star☆
+
+# 京东自动挂机上车地址 
+地址1：http://jdflxfd.tk/login 
+地址2：http://krystal033.tk/login
